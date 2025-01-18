@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>З Днем Народження!</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #FFDEE9, #f2bbc4);
+        }
+
+        .advent-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(145deg, #FF7EB3, #FF758C);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            user-select: none;
+            transition: transform 0.3s;
+        }
+
+        .circle.locked {
+            background: gray;
+            cursor: not-allowed;
+        }
+
+        .circle:hover:not(.locked) {
+            transform: scale(1.1);
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .modal-content img, .modal-content video {
+            width: 1000px;
+            border-radius: 10px;
+        }
+
+        .modal-close {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background: #FF758C;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.5s ease-out;
+        }
+
+        .modal-close:hover, .modal-close:focus {
+            background: white;
+            color: #FF758C;
+            border: 1px solid #FF758C;
+        }
+
+        .alert-box {
+            position: fixed;
+            top: 20%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            display: none;
+            z-index: 1000;
+        }
+
+        .alert-box p {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .alert-box button {
+            padding: 10px 20px;
+            background: #FF758C;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.5s ease-out;
+        }
+
+        .alert-box button:hover, .alert-box button:focus {
+            background: white;
+            color: #FF758C;
+            border: 1px solid #FF758C;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="advent-container">
+        <div class="circle locked" data-day="1">1</div>
+        <div class="circle locked" data-day="2">2</div>
+        <div class="circle locked" data-day="3">3</div>
+        <div class="circle locked" data-day="4">4</div>
+        <div class="circle locked" data-day="5">5</div>
+        <div class="circle" onclick="openExtraContent('images/test1.jpg')">6</div>
+        <div class="circle" onclick="openExtraContent('videos/test2.mp4')">7</div>
+    </div>
+
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <img id="modal-img" src="" alt="Content">
+            <video id="modal-video" controls style="display: none;"></video>
+            <button class="modal-close" onclick="closeModal()">Ура!</button>
+        </div>
+    </div>
+
+    <div class="alert-box" id="alert-box">
+        <p id="alert-message"></p>
+        <button onclick="closeAlert()">ОК</button>
+    </div>
+
+    <script>
+        const unlockDates = [
+            new Date('2025-01-19'),
+            new Date('2025-01-20'),
+            new Date('2025-01-21'),
+            new Date('2025-01-22'),
+            new Date('2025-01-23')
+        ];
+
+        const circles = document.querySelectorAll('.circle');
+        const modal = document.getElementById('modal');
+        const modalImg = document.getElementById('modal-img');
+        const modalVideo = document.getElementById('modal-video');
+        const alertBox = document.getElementById('alert-box');
+        const alertMessage = document.getElementById('alert-message');
+
+        function unlockCircles() {
+            const today = new Date();
+            circles.forEach((circle, index) => {
+                if (today >= unlockDates[index]) {
+                    circle.classList.remove('locked');
+                    circle.addEventListener('click', () => openContent(index));
+                } else {
+                    circle.addEventListener('click', () => {
+                        showAlert(`Цей кружечок відкриється ${unlockDates[index].toLocaleDateString()}`);
+                    });
+                }
+            });
+        }
+
+        function openContent(index) {
+            const contents = [
+                'images/day1.jpg',
+                'images/day2.jpg',
+                'images/day3.jpg',
+                'images/day4.jpg',
+                'videos/birthday.mp4'
+            ];
+            const content = contents[index];
+
+            if (content.endsWith('.mp4')) {
+                modalImg.style.display = 'none';
+                modalVideo.style.display = 'block';
+                modalVideo.src = content;
+            } else {
+                modalVideo.style.display = 'none';
+                modalImg.style.display = 'block';
+                modalImg.src = content;
+            }
+
+            modal.style.display = 'flex';
+        }
+
+        function openExtraContent(content) {
+            if (content.endsWith('.mp4')) {
+                modalImg.style.display = 'none';
+                modalVideo.style.display = 'block';
+                modalVideo.src = content;
+            } else {
+                modalVideo.style.display = 'none';
+                modalImg.style.display = 'block';
+                modalImg.src = content;
+            }
+
+            modal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            modal.style.display = 'none';
+        }
+
+        function showAlert(message) {
+            alertMessage.textContent = message;
+            alertBox.style.display = 'block';
+        }
+
+        function closeAlert() {
+            alertBox.style.display = 'none';
+        }
+
+        unlockCircles();
+    </script>
+</body>
+</html>
