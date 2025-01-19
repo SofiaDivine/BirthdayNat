@@ -70,7 +70,7 @@
         }
 
         .modal-content img, .modal-content video {
-            width: 1000px;
+            width: 800px;
             border-radius: 10px;
         }
 
@@ -136,15 +136,13 @@
         <div class="circle locked" data-day="3">3</div>
         <div class="circle locked" data-day="4">4</div>
         <div class="circle locked" data-day="5">5</div>
-        <div class="circle" onclick="openExtraContent('images/test1.jpg')">6</div>
-        <div class="circle" onclick="openExtraContent('videos/test2.mp4')">7</div>
     </div>
 
     <div class="modal" id="modal">
         <div class="modal-content">
             <img id="modal-img" src="" alt="Content">
             <video id="modal-video" controls style="display: none;"></video>
-            <button class="modal-close" onclick="closeModal()">Ура!</button>
+            <button class="modal-close" onclick="closeModal()">Ура! Закрити відео</button>
         </div>
     </div>
 
@@ -185,7 +183,7 @@
 
         function openContent(index) {
             const contents = [
-                'images/day1.jpg',
+                'videos/video1.mp4',
                 'images/day2.jpg',
                 'images/day3.jpg',
                 'images/day4.jpg',
