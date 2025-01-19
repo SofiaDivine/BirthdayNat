@@ -1,0 +1,121 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #FFDEE9, #f2bbc4);
+}
+
+.advent-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.circle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  background-size: cover;
+  background-position: center;
+  align-items: center;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.3s;
+}
+
+.circle.locked {
+  cursor: not-allowed;
+}
+
+.circle:hover:not(.locked) {
+  transform: scale(1.1);
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.modal-content img, .modal-content video {
+  width: 800px;
+  border-radius: 10px;
+}
+
+.modal-close {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background: #FF758C;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.5s ease-out;
+}
+
+.modal-close:hover, .modal-close:focus {
+  background: white;
+  color: #FF758C;
+  border: 1px solid #FF758C;
+}
+
+.alert-box {
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  display: none;
+  z-index: 1000;
+}
+
+.alert-box p {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.alert-box button {
+  padding: 10px 20px;
+  background: #FF758C;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.5s ease-out;
+}
+
+.alert-box button:hover, .alert-box button:focus {
+  background: white;
+  color: #FF758C;
+  border: 1px solid #FF758C;
+}
